@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.gms.maps.MapView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:layout_height="232dp"/>
+<!--    <com.yandex.mapkit.mapview.MapView-->
+<!--        android:id="@+id/map"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="300dp">-->
+
+<!--    </com.yandex.mapkit.mapview.MapView>-->
 
     <CalendarView
         android:id="@+id/calendarView2"

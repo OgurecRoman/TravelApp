@@ -1,16 +1,25 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center">
+    tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
+    <fragment
+        android:id="@+id/my_nav_graph"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"></fragment>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Начать путешествие"
-        android:textSize="30dp">
-    </Button>
+        app:menu="@menu/menu_nav"
+        android:layout_alignBottom="@+id/my_nav_graph"
+        />
 
-</LinearLayout>
+</RelativeLayout>

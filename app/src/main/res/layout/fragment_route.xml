@@ -4,23 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!--    <com.yandex.mapkit.mapview.MapView-->
-<!--        android:id="@+id/map"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="300dp">-->
-
-<!--    </com.yandex.mapkit.mapview.MapView>-->
-
     <CalendarView
-        android:id="@+id/calendarView2"
         android:layout_width="match_parent"
-        android:layout_height="269dp" />
+        android:layout_height="269dp">
+
+    </CalendarView>
 
     <Button
         android:id="@+id/next"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Сгенерировать поездку"
+        android:textSize="30dp"/>
+
+    <Button
+        android:id="@+id/btn_to_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="На карту"
         android:textSize="30dp"/>
 
 </LinearLayout>

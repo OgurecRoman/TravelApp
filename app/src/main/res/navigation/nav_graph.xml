@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_routeFragment_to_weatherFragment"
             app:destination="@id/weatherFragment" />
+        <action
+            android:id="@+id/action_routeFragment_to_mapActivity"
+            app:destination="@id/mapActivity" />
     </fragment>
     <fragment
         android:id="@+id/weatherFragment"
@@ -37,4 +40,9 @@
         android:name="com.example.myapplication.TODOFragment"
         android:label="fragment_t_o_d_o"
         tools:layout="@layout/fragment_t_o_d_o" />
+    <activity
+        android:id="@+id/mapActivity"
+        android:name="com.example.myapplication.MapActivity"
+        android:label="activity_map"
+        tools:layout="@layout/activity_map" />
 </navigation>

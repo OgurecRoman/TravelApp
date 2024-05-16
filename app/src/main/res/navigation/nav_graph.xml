@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_routeFragment_to_mapActivity"
             app:destination="@id/mapActivity" />
+        <action
+            android:id="@+id/city2"
+            app:destination="@id/weatherFragment" />
     </fragment>
     <fragment
         android:id="@+id/weatherFragment"

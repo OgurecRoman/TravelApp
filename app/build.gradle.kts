@@ -50,15 +50,17 @@ android {
 }
 
 dependencies {
-
+    //Navigation
     implementation("android.arch.navigation:navigation-fragment:1.0.0")
     implementation("android.arch.navigation:navigation-ui:1.0.0")
 
+    //Maps
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("com.google.android.gms:play-services-maps:18.2.0")
     implementation("com.yandex.android:maps.mobile:4.1.0-full")
+
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))

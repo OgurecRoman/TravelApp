@@ -28,6 +28,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name=".meteo.MeteoService"
+            android:exported="true"
+            android:enabled="true"></service>
     </application>
 
 </manifest>

@@ -51,6 +51,7 @@ public class RouteFragment extends Fragment {
         EditText editText = view.findViewById(R.id.city);
 
         Button btn_next = view.findViewById(R.id.next);
+
         Bundle bundle = new Bundle();
         bundle.putString("city", editText.getText().toString());
         btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_routeFragment_to_weatherFragment, bundle));

@@ -37,6 +37,10 @@
         <action
             android:id="@+id/action_weatherFragment_to_TODOFragment"
             app:destination="@id/TODOFragment" />
+        <argument
+            android:name="city"
+            app:argType="string"
+            android:defaultValue="Moscow" />
     </fragment>
     <fragment
         android:id="@+id/TODOFragment"

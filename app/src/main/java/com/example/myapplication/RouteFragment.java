@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,10 +52,14 @@ public class RouteFragment extends Fragment {
         EditText editText = view.findViewById(R.id.city);
 
         Button btn_next = view.findViewById(R.id.next);
-
-        Bundle bundle = new Bundle();
-        bundle.putString("city", editText.getText().toString());
-        btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_routeFragment_to_weatherFragment, bundle));
+        btn_next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("city", editText.getText().toString());
+                Navigation.findNavController(view).navigate(R.id.action_routeFragment_to_weatherFragment, bundle);
+            }
+        });
 
         Button btn_map = view.findViewById(R.id.btn_to_map);
         btn_map.setOnClickListener(new View.OnClickListener() {

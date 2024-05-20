@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.myapplication.meteo.MeteoService;
@@ -35,7 +34,7 @@ public class WeatherFragment extends Fragment {
         return city_from_user;
     }
 
-    public static WeatherFragment newInstance(String param1, String param2) {
+    public static WeatherFragment newInstance(String param1) {
         WeatherFragment fragment = new WeatherFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
@@ -68,16 +67,17 @@ public class WeatherFragment extends Fragment {
         desc_view = view.findViewById(R.id.desc);
         day_view = view.findViewById(R.id.day);
 
-        city_from_user = mParam1;
-
         Button btn_next = view.findViewById(R.id.next);
         btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_weatherFragment_to_TODOFragment));
 
-        getActivity().registerReceiver(receivar, new IntentFilter("MeteoService"),
-                getActivity().RECEIVER_EXPORTED);
+        Log.d("FFF", "ABOBA " + mParam1);
 
         Intent intent = new Intent(getActivity(), MeteoService.class);
+        intent.putExtra("CITY", mParam1);
         getActivity().startService(intent);
+
+        getActivity().registerReceiver(receivar, new IntentFilter("MeteoService"),
+                getActivity().RECEIVER_EXPORTED);
 
         return view;
     }

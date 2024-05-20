@@ -1,7 +1,11 @@
 package com.example.myapplication.meteo;
 
+import android.content.Intent;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+
+import androidx.annotation.NonNull;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,10 +21,10 @@ public class HttpsRequesr implements Runnable {
     URL url;
     Handler handler;
 
-    public HttpsRequesr(android.os.Handler handler) {
+    public HttpsRequesr(android.os.Handler handler, String city) {
         this.handler = handler;
         try {
-            url = new URL(APIREQUEST + "?" + "q=" + CITY + "&key=" + KEY);
+            url = new URL(APIREQUEST + "?" + "q=" + city + "&key=" + KEY);
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

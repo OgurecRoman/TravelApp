@@ -5,13 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".HomepageFragment"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:layout_margin="5dp">
 
     <Button
         android:id="@+id/start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Начать путешествие"
+        android:background="@drawable/but_style"
         android:textSize="30dp">
     </Button>
 

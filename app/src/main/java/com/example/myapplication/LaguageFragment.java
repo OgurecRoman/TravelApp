@@ -16,20 +16,18 @@ import com.example.myapplication.recycle_list.Elem;
 
 import java.util.ArrayList;
 
-public class TODOFragment extends Fragment {
+public class LaguageFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private String mParam1;
     private String mParam2;
 
-    public TODOFragment() {
-        // Required empty public constructor
+    public LaguageFragment() {
     }
 
-    public static TODOFragment newInstance(String param1, String param2) {
-        TODOFragment fragment = new TODOFragment();
+    public static LaguageFragment newInstance(String param1, String param2) {
+        LaguageFragment fragment = new LaguageFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -49,7 +47,7 @@ public class TODOFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_t_o_d_o, container, false);
+        View view = inflater.inflate(R.layout.fragment_laguage, container, false);
 
         ArrayList<Elem> items = new ArrayList<>();
 
@@ -57,8 +55,8 @@ public class TODOFragment extends Fragment {
         ItemAdapter adapter = new ItemAdapter(getActivity(), items);
         recyclerView.setAdapter(adapter);
 
-        Button but_back = view.findViewById(R.id.back);
-        but_back.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_TODOFragment_to_laguageFragment));
+        Button but_next = view.findViewById(R.id.next);
+        but_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_laguageFragment_to_TODOFragment));
 
         ImageButton but_del = view.findViewById(R.id.butDelete);
         but_del.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +77,6 @@ public class TODOFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
             }
         });
-
         return view;
     }
 }

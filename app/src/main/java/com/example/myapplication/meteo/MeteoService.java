@@ -2,7 +2,6 @@ package com.example.myapplication.meteo;
 
 import android.app.Service;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -24,6 +23,7 @@ public class MeteoService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String city_name = intent.getStringExtra("CITY");
+        String date = intent.getStringExtra("DATE");
         handler = new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
@@ -31,12 +31,11 @@ public class MeteoService extends Service {
                 String response = (String) msg.obj;
                 Intent intent = new Intent("MeteoService");
                 intent.putExtra("INFO", response);
-                intent.putExtra("CITY", city_name);
                 sendBroadcast(intent);
             }
         };
 
-        Thread weatherThread = new Thread(new HttpsRequesr(handler, city_name));
+        Thread weatherThread = new Thread(new HttpsRequesr(handler, city_name, date));
         weatherThread.start();
 
         Toast.makeText(this, "Сервис создан", Toast.LENGTH_SHORT).show();

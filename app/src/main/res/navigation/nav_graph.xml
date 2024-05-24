@@ -35,21 +35,40 @@
         android:label="fragment_weather"
         tools:layout="@layout/fragment_weather" >
         <action
-            android:id="@+id/action_weatherFragment_to_TODOFragment"
-            app:destination="@id/TODOFragment" />
+            android:id="@+id/action_weatherFragment_to_LaguageFragment"
+            app:destination="@id/navigation" />
         <argument
             android:name="city"
             app:argType="string"
-            android:defaultValue="Moscow" />
+            android:defaultValue="Москва" />
+        <argument
+            android:name="date"
+            app:argType="string" />
     </fragment>
-    <fragment
-        android:id="@+id/TODOFragment"
-        android:name="com.example.myapplication.TODOFragment"
-        android:label="fragment_t_o_d_o"
-        tools:layout="@layout/fragment_t_o_d_o" />
     <activity
         android:id="@+id/mapActivity"
         android:name="com.example.myapplication.MapActivity"
         android:label="activity_map"
         tools:layout="@layout/activity_map" />
+    <navigation android:id="@+id/navigation"
+        app:startDestination="@id/laguageFragment">
+        <fragment
+            android:id="@+id/laguageFragment"
+            android:name="com.example.myapplication.LaguageFragment"
+            android:label="fragment_laguage"
+            tools:layout="@layout/fragment_laguage" >
+            <action
+                android:id="@+id/action_laguageFragment_to_TODOFragment"
+                app:destination="@id/TODOFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/TODOFragment"
+            android:name="com.example.myapplication.TODOFragment"
+            android:label="fragment_t_o_d_o"
+            tools:layout="@layout/fragment_t_o_d_o" >
+            <action
+                android:id="@+id/action_TODOFragment_to_laguageFragment"
+                app:destination="@id/laguageFragment" />
+        </fragment>
+    </navigation>
 </navigation>

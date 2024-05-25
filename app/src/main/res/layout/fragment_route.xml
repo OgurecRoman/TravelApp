@@ -3,14 +3,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:layout_margin="5dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Маршрут"
+        android:textSize="40dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/theme">
+    </TextView>
 
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:onClick="onClick">
+        android:onClick="onClick"
+        android:layout_gravity="center">
 
     </CalendarView>
 
@@ -21,6 +31,7 @@
         android:text="Сгенерировать поездку"
         android:layout_margin="5dp"
         android:background="@drawable/but_style"
+        android:layout_gravity="center"
         android:textSize="30dp"/>
 
     <Button
@@ -30,13 +41,15 @@
         android:text="На карту"
         android:layout_margin="5dp"
         android:background="@drawable/but_style"
+        android:layout_gravity="center"
         android:textSize="30dp"/>
 
     <EditText
         android:id="@+id/city"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Введите город">
+        android:hint="Введите город"
+        android:layout_gravity="center">
 
     </EditText>
 

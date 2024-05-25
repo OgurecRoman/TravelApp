@@ -24,7 +24,7 @@ public class RouteFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
-    private String date;
+    private String date = "";
 
     public RouteFragment() {
     }

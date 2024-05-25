@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:layout_margin="5dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Прогноз погоды"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:textColor="@color/theme">
-
-    </TextView>
 
     <TextView
         android:id="@+id/name"
@@ -114,17 +103,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:background="@drawable/but_style"
-        android:layout_gravity="center"
-        android:layout_margin="5dp"
-        android:text="Дальше">
-
-    </Button>
 
 </LinearLayout>

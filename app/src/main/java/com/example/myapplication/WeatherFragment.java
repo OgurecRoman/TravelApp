@@ -22,20 +22,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+
 public class WeatherFragment extends Fragment {
     private static final String ARG_PARAM1 = "city";
     private static final String ARG_PARAM2 = "date";
     private String mParam_city;
     private String mParam_date;
-    public String city_from_user;
+    private String[] list_month = {"января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+            "августа", "сентября", "октября", "ноября", "декабря"};
     TextView name_view;
     TextView temp_max_view;
     TextView temp_min_view;
     TextView day_view;
-
-    public String getCity_from_user() {
-        return city_from_user;
-    }
+    TextView month_view;
 
     public static WeatherFragment newInstance(String param_city, String param_date) {
         WeatherFragment fragment = new WeatherFragment();
@@ -71,11 +71,13 @@ public class WeatherFragment extends Fragment {
         temp_max_view = view.findViewById(R.id.temp_max);
         temp_min_view = view.findViewById(R.id.temp_min);
         day_view = view.findViewById(R.id.day);
+        month_view = view.findViewById(R.id.month);
 
         Button btn_next = view.findViewById(R.id.next);
         btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_weatherFragment_to_LaguageFragment));
 
         Intent intent = new Intent(getActivity(), MeteoService.class);
+        if (mParam_city.isEmpty()) mParam_city = "Москва";
         intent.putExtra("CITY", mParam_city);
         intent.putExtra("DATE", mParam_date);
         getActivity().startService(intent);
@@ -103,13 +105,16 @@ public class WeatherFragment extends Fragment {
                 String date = forecast.getString("date");
                 double temp_max = day.getDouble("maxtemp_c");
                 double temp_min = day.getDouble("mintemp_c");
+                String date_day = date.substring(8, 10);
+                int date_month = Integer.parseInt(date.substring(5, 7));
+
                 temp_max_view.setText("" + temp_max);
                 temp_min_view.setText("" + temp_min);
                 name_view.setText("" + name);
-                day_view.setText("" + date);
+                day_view.setText("" + date_day);
+                month_view.setText("" + list_month[date_month - 1]);
             } catch (JSONException e) {
                 throw new RuntimeException(e);
-                
             }
         }
     };

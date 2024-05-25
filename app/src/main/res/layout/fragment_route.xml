@@ -24,6 +24,15 @@
 
     </CalendarView>
 
+    <EditText
+        android:id="@+id/city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Введите город"
+        android:layout_gravity="center">
+
+    </EditText>
+
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
@@ -33,24 +42,5 @@
         android:background="@drawable/but_style"
         android:layout_gravity="center"
         android:textSize="30dp"/>
-
-    <Button
-        android:id="@+id/btn_to_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="На карту"
-        android:layout_margin="5dp"
-        android:background="@drawable/but_style"
-        android:layout_gravity="center"
-        android:textSize="30dp"/>
-
-    <EditText
-        android:id="@+id/city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Введите город"
-        android:layout_gravity="center">
-
-    </EditText>
 
 </LinearLayout>

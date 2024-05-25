@@ -64,15 +64,6 @@ public class RouteFragment extends Fragment {
             }
         });
 
-        Button btn_map = view.findViewById(R.id.btn_to_map);
-        btn_map.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MapActivity.class);
-                startActivity(intent);
-            }
-        });
-
         calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {

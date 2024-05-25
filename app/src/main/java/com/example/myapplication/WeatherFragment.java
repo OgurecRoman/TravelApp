@@ -97,7 +97,7 @@ public class WeatherFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.d("RESULT", intent.getStringExtra("INFO"));
             String str = intent.getStringExtra("INFO");
-            if (Objects.equals(str, "error")) {
+            if (Objects.equals(str, "ERROR")) {
                 name_view.setText("Такого города не знаю :(");
                 return;
             }

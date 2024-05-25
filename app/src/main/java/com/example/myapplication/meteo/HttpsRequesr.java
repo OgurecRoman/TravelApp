@@ -43,7 +43,7 @@ public class HttpsRequesr implements Runnable {
 
         } catch (IOException e) {
             Message msg = Message.obtain();
-            msg.obj = "error";
+            msg.obj = "ERROR";
             handler.sendMessage(msg);
         }
     }

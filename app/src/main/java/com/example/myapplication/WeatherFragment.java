@@ -22,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
+import java.util.Objects;
 
 public class WeatherFragment extends Fragment {
     private static final String ARG_PARAM1 = "city";
@@ -78,6 +78,10 @@ public class WeatherFragment extends Fragment {
 
         Intent intent = new Intent(getActivity(), MeteoService.class);
         if (mParam_city.isEmpty()) mParam_city = "Москва";
+        if (mParam_city.isEmpty()) {
+            name_view.setText("Введите город");
+            return view;
+        }
         intent.putExtra("CITY", mParam_city);
         intent.putExtra("DATE", mParam_date);
         getActivity().startService(intent);
@@ -93,6 +97,10 @@ public class WeatherFragment extends Fragment {
         public void onReceive(Context context, Intent intent) {
             Log.d("RESULT", intent.getStringExtra("INFO"));
             String str = intent.getStringExtra("INFO");
+            if (Objects.equals(str, "error")) {
+                name_view.setText("Такого города не знаю :(");
+                return;
+            }
             try {
                 JSONObject start = new JSONObject(str);
                 JSONObject location = start.getJSONObject("location");

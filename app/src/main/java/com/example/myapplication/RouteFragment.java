@@ -1,24 +1,17 @@
 package com.example.myapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.android.gms.maps.SupportMapFragment;
-import com.yandex.mapkit.MapKitFactory;
-import com.yandex.mapkit.mapview.MapView;
 
 public class RouteFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";

@@ -38,15 +38,12 @@ public class MeteoService extends Service {
         Thread weatherThread = new Thread(new HttpsRequesr(handler, city_name, date));
         weatherThread.start();
 
-        Toast.makeText(this, "Сервис создан", Toast.LENGTH_SHORT).show();
-
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Toast.makeText(this, "Сервис уничтожен", Toast.LENGTH_SHORT).show();
     }
 
     @Nullable

@@ -1,7 +1,5 @@
 package com.example.myapplication.recycle_list;
 
-import android.widget.EditText;
-
 public class Elem {
     String name;
     Boolean on;

@@ -2,14 +2,9 @@ package com.example.myapplication;
 
 import android.app.Application;
 
-import androidx.room.Room;
-
-import com.example.myapplication.databases.ElemsDatabase;
 import com.yandex.mapkit.MapKitFactory;
 
 public class App extends Application {
-    public ElemsDatabase elemsDatabase = Room.databaseBuilder(getApplicationContext(),
-            ElemsDatabase.class, "elems-database").build();
     @Override
     public void onCreate() {
         super.onCreate();

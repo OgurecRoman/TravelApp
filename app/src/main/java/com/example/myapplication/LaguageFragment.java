@@ -1,27 +1,34 @@
 package com.example.myapplication;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.myapplication.data_base.DBHelper;
 import com.example.myapplication.recycle_list.Elem;
 
 import java.util.ArrayList;
 
 public class LaguageFragment extends Fragment {
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+    private DBHelper dbHelper;
+    private SQLiteDatabase database;
+    private ContentValues contentValues;
 
     public LaguageFragment() {
     }
@@ -49,10 +56,12 @@ public class LaguageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_laguage, container, false);
 
-        ArrayList<Elem> items = new ArrayList<>();
+        dbHelper = new DBHelper(getActivity());
+        database = dbHelper.getWritableDatabase();
+        contentValues = new ContentValues();
 
         RecyclerView recyclerView = view.findViewById(R.id.list);
-        ItemAdapter adapter = new ItemAdapter(getActivity(), items);
+        ItemAdapter adapter = new ItemAdapter(getActivity(), database);
         recyclerView.setAdapter(adapter);
 
         Button but_next = view.findViewById(R.id.next);
@@ -62,8 +71,8 @@ public class LaguageFragment extends Fragment {
         but_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.clear();
-                ItemAdapter adapter = new ItemAdapter(getActivity(), items);
+                database.delete(DBHelper.TABLE_CONSTANTS, null, null);
+                ItemAdapter adapter = new ItemAdapter(getActivity(), database);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -72,8 +81,10 @@ public class LaguageFragment extends Fragment {
         but_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.add(new Elem());
-                ItemAdapter adapter = new ItemAdapter(getActivity(), items);
+                contentValues.put(DBHelper.KEY_NAME, "");
+                contentValues.put(DBHelper.KEY_SET, 0);
+                database.insert(DBHelper.TABLE_CONSTANTS, null, contentValues);
+                ItemAdapter adapter = new ItemAdapter(getActivity(), database);
                 recyclerView.setAdapter(adapter);
             }
         });

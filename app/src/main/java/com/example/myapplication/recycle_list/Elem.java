@@ -9,6 +9,12 @@ public class Elem {
         this.on = false;
     }
 
+    public Elem(String name, int on){
+        this.name = name;
+        if (on == 1) this.on = true;
+        else this.on = false;
+    }
+
     public void setName(String name) {
         this.name = name;
     }

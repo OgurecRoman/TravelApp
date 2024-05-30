@@ -1,7 +1,9 @@
 package com.example.myapplication;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
 
+import com.example.myapplication.data_base.DBHelper;
 import com.yandex.mapkit.MapKitFactory;
 
 public class App extends Application {

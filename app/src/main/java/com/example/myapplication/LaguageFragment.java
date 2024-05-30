@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -9,17 +8,14 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import com.example.myapplication.adapters.ItemAdapter;
 import com.example.myapplication.data_base.DBHelper;
-import com.example.myapplication.recycle_list.Elem;
-
-import java.util.ArrayList;
 
 public class LaguageFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
@@ -29,9 +25,6 @@ public class LaguageFragment extends Fragment {
     private DBHelper dbHelper;
     private SQLiteDatabase database;
     private ContentValues contentValues;
-
-    public LaguageFragment() {
-    }
 
     public static LaguageFragment newInstance(String param1, String param2) {
         LaguageFragment fragment = new LaguageFragment();

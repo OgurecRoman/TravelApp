@@ -13,7 +13,8 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "travellingBD";
-    public static final String TABLE_CONSTANTS = "travelling";
+    public static final String TABLE_CONSTANTS = "list_laguage";
+    public static final String TABLE_DOING = "list_doing";
 
     public static final String KEY_ID = "id";
     public static final String KEY_NAME = "name";
@@ -26,11 +27,15 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_CONSTANTS + "(" + KEY_ID +
                 " integer primary key," + KEY_NAME + " text," + KEY_SET + " integer" + ")");
+
+        db.execSQL("CREATE TABLE " + TABLE_DOING + "(" + KEY_ID +
+                " integer primary key," + KEY_NAME + " text," + KEY_SET + " integer" + ")");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_CONSTANTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOING);
 
         onCreate(db);
     }

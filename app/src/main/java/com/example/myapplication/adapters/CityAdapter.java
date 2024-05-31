@@ -8,24 +8,35 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Paint;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
 import com.example.myapplication.data_base.DBHelper;
 
 public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
+    private final Context context;
     private final LayoutInflater inflater;
     private final SQLiteDatabase database;
+    private final CalendarView calendar;
+    private String[] list_month = {"января", "февраля", "марта", "апреля", "мая", "июня", "июля",
+            "августа", "сентября", "октября", "ноября", "декабря"};
 
-    public CityAdapter(Context context, SQLiteDatabase database) {
+    public CityAdapter(Context context, SQLiteDatabase database, CalendarView calendar) {
+        this.calendar = calendar;
+        this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.database = database;
     }
@@ -73,6 +84,29 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
         String day = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DAY));
         String month = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MONTH));
 
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String elm = "", eld = "";
+                if (month < 10) elm = "0";
+                if (dayOfMonth < 10) eld = "0";
+                String selectedDate = new StringBuilder().append(year).append("-")
+                        .append(elm).append(month + 1).append("-").append(eld).append(dayOfMonth).toString();
+
+                ContentValues contentValues_name = new ContentValues();
+                contentValues_name.put(DBHelper.KEY_DATE, selectedDate);
+                contentValues_name.put(DBHelper.KEY_DAY, dayOfMonth);
+                contentValues_name.put(DBHelper.KEY_MONTH, list_month[month]);
+                database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                        "setting = ?", new String[] { "1" });
+
+                contentValues_name.put(DBHelper.KEY_SET, 0);
+                database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                        "setting = ?", new String[] { "1" });
+                CityAdapter.this.notifyDataSetChanged();
+            }
+        });
+
         holder.but_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,23 +115,23 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
             }
         });
 
-//        holder.checkBox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ContentValues contentValues_set = new ContentValues();
-//                if (get_elem(id).getInt(get_elem(id).getColumnIndex(DBHelper.KEY_SET)) == 1) {
-//                    contentValues_set.put(DBHelper.KEY_SET, 0);
-//                    holder.editText.setPaintFlags(holder.editText.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
-//                }
-//                else {
-//                    contentValues_set.put(DBHelper.KEY_SET, 1);
-//                    holder.editText.setPaintFlags(holder.editText.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//
-//                }
-//                database.update(DBHelper.TABLE_CONSTANTS, contentValues_set,
-//                        "id = ?", new String[] { "" + id });
-//            }
-//        });
+        holder.date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentValues contentValues_name = new ContentValues();
+                if (!(get_elem(id).getInt(get_elem(id).getColumnIndex(DBHelper.KEY_SET)) == 1)){
+                    contentValues_name.put(DBHelper.KEY_SET, 1);
+                    holder.date.setBackgroundColor(context.getResources().getColor(R.color.set));
+                }else{
+                    contentValues_name.put(DBHelper.KEY_SET, 0);
+                    holder.date.setBackgroundColor(context.getResources().getColor(R.color.white));
+                }
+                database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                        "id = ?", new String[] { "" + id });
+
+            }
+        });
+
         holder.city_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -121,6 +155,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
         holder.city_text.setText(city);
         holder.day_text.setText(day);
         holder.month_text.setText(month);
+        if (get_elem(id).getInt(get_elem(id).getColumnIndex(DBHelper.KEY_SET)) == 1)
+            holder.date.setBackgroundColor(context.getResources().getColor(R.color.set));
+        else
+            holder.date.setBackgroundColor(context.getResources().getColor(R.color.white));
     }
 
     @Override
@@ -133,12 +171,14 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
         final TextView day_text;
         final TextView month_text;
         final ImageButton but_remove;
+        final LinearLayout date;
         ViewHolder(View view){
             super(view);
             city_text = view.findViewById(R.id.city);
             day_text = view.findViewById(R.id.day);
             month_text = view.findViewById(R.id.month);
             but_remove = view.findViewById(R.id.but_remove);
+            date = view.findViewById(R.id.date);
         }
     }
 }

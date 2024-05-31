@@ -55,12 +55,14 @@ public class RouteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route, container, false);
 
+        CalendarView calendar = view.findViewById(R.id.calendar);
+
         dbHelper = new DBHelper(getActivity());
         database = dbHelper.getWritableDatabase();
         contentValues = new ContentValues();
 
         RecyclerView recyclerView = view.findViewById(R.id.list);
-        CityAdapter adapter = new CityAdapter(getActivity(), database);
+        CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
         recyclerView.setAdapter(adapter);
 
         ImageButton but_del = view.findViewById(R.id.but_delete);
@@ -68,7 +70,7 @@ public class RouteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 database.delete(DBHelper.TABLE_CITIES, null, null);
-                CityAdapter adapter = new CityAdapter(getActivity(), database);
+                CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -81,13 +83,12 @@ public class RouteFragment extends Fragment {
                 contentValues.put(DBHelper.KEY_DAY, Calendar.getInstance().getTime().getDate());
                 contentValues.put(DBHelper.KEY_MONTH, list_month[Calendar.getInstance().getTime().getMonth()]);
                 database.insert(DBHelper.TABLE_CITIES, null, contentValues);
-                CityAdapter adapter = new CityAdapter(getActivity(), database);
+                CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
                 recyclerView.setAdapter(adapter);
             }
         });
 
         Button btn_next = view.findViewById(R.id.next);
-        CalendarView calendar = view.findViewById(R.id.calendar);
         btn_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,18 +96,6 @@ public class RouteFragment extends Fragment {
                 //bundle.putString("city", editText.getText().toString());
                 bundle.putString("date", date);
                 Navigation.findNavController(view).navigate(R.id.action_routeFragment_to_weatherFragment, bundle);
-            }
-        });
-
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String elm = "", eld = "";
-                if (month < 10) elm = "0";
-                if (dayOfMonth < 10) eld = "0";
-                String selectedDate = new StringBuilder().append(year).append("-")
-                        .append(elm).append(month + 1).append("-").append(eld).append(dayOfMonth).toString();
-                date = selectedDate;
             }
         });
 

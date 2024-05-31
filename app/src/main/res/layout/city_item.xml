@@ -26,6 +26,7 @@
     </EditText>
 
     <LinearLayout
+        android:id="@+id/date"
         android:layout_width="70dp"
         android:layout_height="60dp"
         android:orientation="vertical">

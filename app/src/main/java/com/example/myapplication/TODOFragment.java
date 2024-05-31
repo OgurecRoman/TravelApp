@@ -22,22 +22,13 @@ import com.example.myapplication.recycle_list.Elem;
 import java.util.ArrayList;
 
 public class TODOFragment extends Fragment {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     private DBHelper dbHelper;
     private SQLiteDatabase database;
     private ContentValues contentValues;
 
-    public static TODOFragment newInstance(String param1, String param2) {
+    public static TODOFragment newInstance() {
         TODOFragment fragment = new TODOFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,10 +36,6 @@ public class TODOFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,30 +13,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.myapplication.adapters.CityAdapter;
-import com.example.myapplication.adapters.ItemAdapter;
 import com.example.myapplication.data_base.DBHelper;
 
 import java.util.Calendar;
 
 public class RouteFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String date = "";
     private DBHelper dbHelper;
     private SQLiteDatabase database;
     private ContentValues contentValues;
     private String[] list_month = {"января", "февраля", "марта", "апреля", "мая", "июня", "июля",
             "августа", "сентября", "октября", "ноября", "декабря"};
 
-    public static RouteFragment newInstance(String param1) {
+    public static RouteFragment newInstance() {
         RouteFragment fragment = new RouteFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,9 +37,6 @@ public class RouteFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-        }
     }
 
     @Override
@@ -80,6 +69,7 @@ public class RouteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 contentValues.put(DBHelper.KEY_CITY, "");
+                contentValues.put(DBHelper.KEY_SET, 0);
                 contentValues.put(DBHelper.KEY_DAY, Calendar.getInstance().getTime().getDate());
                 contentValues.put(DBHelper.KEY_MONTH, list_month[Calendar.getInstance().getTime().getMonth()]);
                 database.insert(DBHelper.TABLE_CITIES, null, contentValues);
@@ -89,15 +79,7 @@ public class RouteFragment extends Fragment {
         });
 
         Button btn_next = view.findViewById(R.id.next);
-        btn_next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
-                //bundle.putString("city", editText.getText().toString());
-                bundle.putString("date", date);
-                Navigation.findNavController(view).navigate(R.id.action_routeFragment_to_weatherFragment, bundle);
-            }
-        });
+        btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_routeFragment_to_weatherFragment));
 
         return view;
     }

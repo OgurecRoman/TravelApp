@@ -18,19 +18,13 @@ import com.example.myapplication.adapters.ItemAdapter;
 import com.example.myapplication.data_base.DBHelper;
 
 public class LaguageFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
     private DBHelper dbHelper;
     private SQLiteDatabase database;
     private ContentValues contentValues;
 
-    public static LaguageFragment newInstance(String param1, String param2) {
+    public static LaguageFragment newInstance() {
         LaguageFragment fragment = new LaguageFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -38,10 +32,6 @@ public class LaguageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override

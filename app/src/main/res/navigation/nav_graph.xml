@@ -37,13 +37,6 @@
         <action
             android:id="@+id/action_weatherFragment_to_LaguageFragment"
             app:destination="@id/navigation" />
-        <argument
-            android:name="city"
-            app:argType="string"
-            android:defaultValue="Москва" />
-        <argument
-            android:name="date"
-            app:argType="string" />
     </fragment>
     <activity
         android:id="@+id/mapActivity"

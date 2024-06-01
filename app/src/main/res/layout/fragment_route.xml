@@ -46,7 +46,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="350dp"
-        android:layout_height="170dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 
@@ -55,18 +55,19 @@
     <CalendarView
         android:id="@+id/calendar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:onClick="onClick"
-        android:layout_gravity="center">
+        android:layout_height="294dp"
+        android:layout_gravity="center"
+
+        android:onClick="onClick">
 
     </CalendarView>
 
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:text="Сгенерировать поездку"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="@drawable/but_style"
         android:layout_gravity="center"
         android:textSize="30dp"/>

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +41,15 @@ public class RouteFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        ContentValues contentValues_name = new ContentValues();
+        contentValues_name.put(DBHelper.KEY_SET, 0);
+        database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                "setting = ?", new String[] { "1" });
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_route, container, false);
@@ -61,6 +71,27 @@ public class RouteFragment extends Fragment {
                 database.delete(DBHelper.TABLE_CITIES, null, null);
                 CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
                 recyclerView.setAdapter(adapter);
+            }
+        });
+
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                String elm = "", eld = "";
+                if (month < 10) elm = "0";
+                if (dayOfMonth < 10) eld = "0";
+                String selectedDate = new StringBuilder().append(year).append("-")
+                        .append(elm).append(month + 1).append("-").append(eld).append(dayOfMonth).toString();
+                ContentValues contentValues_name = new ContentValues();
+                contentValues_name.put(DBHelper.KEY_DATE, selectedDate);
+                contentValues_name.put(DBHelper.KEY_DAY, dayOfMonth);
+                contentValues_name.put(DBHelper.KEY_MONTH, list_month[month]);
+                database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                        "setting = ?", new String[] { "1" });
+                contentValues_name.put(DBHelper.KEY_SET, 0);
+                database.update(DBHelper.TABLE_CITIES, contentValues_name,
+                        "setting = ?", new String[] { "1" });
+                recyclerView.setAdapter(new CityAdapter(getActivity(), database, calendar));
             }
         });
 

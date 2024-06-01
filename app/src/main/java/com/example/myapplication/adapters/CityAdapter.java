@@ -7,6 +7,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,32 +77,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
     @Override
     public void onBindViewHolder(CityAdapter.ViewHolder holder, int position) {
         int id = get_id(position);
-        String city = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY));
         String day = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DAY));
         String month = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MONTH));
-
-        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            @Override
-            public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String elm = "", eld = "";
-                if (month < 10) elm = "0";
-                if (dayOfMonth < 10) eld = "0";
-                String selectedDate = new StringBuilder().append(year).append("-")
-                        .append(elm).append(month + 1).append("-").append(eld).append(dayOfMonth).toString();
-
-                ContentValues contentValues_name = new ContentValues();
-                contentValues_name.put(DBHelper.KEY_DATE, selectedDate);
-                contentValues_name.put(DBHelper.KEY_DAY, dayOfMonth);
-                contentValues_name.put(DBHelper.KEY_MONTH, list_month[month]);
-                database.update(DBHelper.TABLE_CITIES, contentValues_name,
-                        "setting = ?", new String[] { "1" });
-
-                contentValues_name.put(DBHelper.KEY_SET, 0);
-                database.update(DBHelper.TABLE_CITIES, contentValues_name,
-                        "setting = ?", new String[] { "1" });
-                CityAdapter.this.notifyDataSetChanged();
-            }
-        });
 
         holder.but_remove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,7 +101,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
                 }
                 database.update(DBHelper.TABLE_CITIES, contentValues_name,
                         "id = ?", new String[] { "" + id });
-
+                Log.d("RRR", "Я туть!!!" + id
+                        + get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY)));
             }
         });
 
@@ -145,10 +123,15 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
                 contentValues_name.put(DBHelper.KEY_CITY, holder.city_text.getText().toString());
                 database.update(DBHelper.TABLE_CITIES, contentValues_name,
                         "id = ?", new String[] { "" + id });
+                Log.d("RRR", "я чето исправил");
             }
         });
 
-        holder.city_text.setText(city);
+//        city = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY));
+//        day = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DAY));
+//        month = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MONTH));
+
+        holder.city_text.setText(get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY)));
         holder.day_text.setText(day);
         holder.month_text.setText(month);
         if (get_elem(id).getInt(get_elem(id).getColumnIndex(DBHelper.KEY_SET)) == 1)

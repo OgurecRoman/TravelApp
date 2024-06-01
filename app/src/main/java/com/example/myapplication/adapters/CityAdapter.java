@@ -27,12 +27,10 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
     private final Context context;
     private final LayoutInflater inflater;
     private final SQLiteDatabase database;
-    private final CalendarView calendar;
     private String[] list_month = {"января", "февраля", "марта", "апреля", "мая", "июня", "июля",
             "августа", "сентября", "октября", "ноября", "декабря"};
 
-    public CityAdapter(Context context, SQLiteDatabase database, CalendarView calendar) {
-        this.calendar = calendar;
+    public CityAdapter(Context context, SQLiteDatabase database) {
         this.context = context;
         this.inflater = LayoutInflater.from(context);
         this.database = database;
@@ -101,8 +99,6 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
                 }
                 database.update(DBHelper.TABLE_CITIES, contentValues_name,
                         "id = ?", new String[] { "" + id });
-                Log.d("RRR", "Я туть!!!" + id
-                        + get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY)));
             }
         });
 
@@ -123,13 +119,8 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.ViewHolder>{
                 contentValues_name.put(DBHelper.KEY_CITY, holder.city_text.getText().toString());
                 database.update(DBHelper.TABLE_CITIES, contentValues_name,
                         "id = ?", new String[] { "" + id });
-                Log.d("RRR", "я чето исправил");
             }
         });
-
-//        city = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY));
-//        day = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DAY));
-//        month = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MONTH));
 
         holder.city_text.setText(get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY)));
         holder.day_text.setText(day);

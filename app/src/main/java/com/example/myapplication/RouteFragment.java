@@ -61,7 +61,7 @@ public class RouteFragment extends Fragment {
         contentValues = new ContentValues();
 
         RecyclerView recyclerView = view.findViewById(R.id.list);
-        CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
+        CityAdapter adapter = new CityAdapter(getActivity(), database);
         recyclerView.setAdapter(adapter);
 
         ImageButton but_del = view.findViewById(R.id.but_delete);
@@ -69,7 +69,7 @@ public class RouteFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 database.delete(DBHelper.TABLE_CITIES, null, null);
-                CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
+                CityAdapter adapter = new CityAdapter(getActivity(), database);
                 recyclerView.setAdapter(adapter);
             }
         });
@@ -91,7 +91,7 @@ public class RouteFragment extends Fragment {
                 contentValues_name.put(DBHelper.KEY_SET, 0);
                 database.update(DBHelper.TABLE_CITIES, contentValues_name,
                         "setting = ?", new String[] { "1" });
-                recyclerView.setAdapter(new CityAdapter(getActivity(), database, calendar));
+                recyclerView.setAdapter(new CityAdapter(getActivity(), database));
             }
         });
 
@@ -104,7 +104,7 @@ public class RouteFragment extends Fragment {
                 contentValues.put(DBHelper.KEY_DAY, Calendar.getInstance().getTime().getDate());
                 contentValues.put(DBHelper.KEY_MONTH, list_month[Calendar.getInstance().getTime().getMonth()]);
                 database.insert(DBHelper.TABLE_CITIES, null, contentValues);
-                CityAdapter adapter = new CityAdapter(getActivity(), database, calendar);
+                CityAdapter adapter = new CityAdapter(getActivity(), database);
                 recyclerView.setAdapter(adapter);
             }
         });

@@ -24,6 +24,10 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String KEY_DATE = "date";
     public static final String KEY_DAY = "day";
     public static final String KEY_MONTH = "month";
+    public static final String KEY_MAX_TEMP = "max_temp";
+    public static final String KEY_MIN_TEMP = "min_temp";
+    public static final String KEY_URL_IMG = "url_img";
+
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -38,7 +42,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE " + TABLE_CITIES + "(" + KEY_ID +
                 " integer primary key," + KEY_CITY + " text," + KEY_DATE + " text,"
-                + KEY_DAY + " integer," + KEY_MONTH + " text," + KEY_SET + " integer" + ")");
+                + KEY_DAY + " integer," + KEY_MONTH + " text," + KEY_SET + " integer,"
+                + KEY_MAX_TEMP + " integer," + KEY_MIN_TEMP + " integer," + KEY_URL_IMG + " text" + ")");
     }
 
     @Override

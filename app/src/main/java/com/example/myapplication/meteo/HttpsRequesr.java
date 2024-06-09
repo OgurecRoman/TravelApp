@@ -4,6 +4,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.example.myapplication.adapters.WeatherAdapter;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,9 +18,11 @@ public class HttpsRequesr implements Runnable {
     static final String APIREQUEST = "https://api.weatherapi.com/v1/forecast.json";
     URL url;
     Handler handler;
+    Integer id;
 
-    public HttpsRequesr(android.os.Handler handler, String city, String date) {
+    public HttpsRequesr(android.os.Handler handler, String city, String date, Integer id) {
         this.handler = handler;
+        this.id = id;
         try {
             url = new URL(APIREQUEST + "?" + "q=" + city + "&dt=" + date + "&key=" + KEY);
         } catch (MalformedURLException e) {
@@ -39,6 +43,7 @@ public class HttpsRequesr implements Runnable {
             connection.disconnect();
 
             Message msg = Message.obtain();
+            msg.arg1 = id;
             msg.obj = response.toString();
             handler.sendMessage(msg);
 

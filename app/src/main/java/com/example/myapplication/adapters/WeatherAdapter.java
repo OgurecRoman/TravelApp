@@ -32,11 +32,13 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     private final Context context;
     private final LayoutInflater inflater;
     private final SQLiteDatabase database;
+    private final DBHelper dbHelper;
 
-    public WeatherAdapter(Context context, SQLiteDatabase database) {
+    public WeatherAdapter(Context context) {
+        this.dbHelper = new DBHelper(context);
+        this.database = dbHelper.getWritableDatabase();
         this.context = context;
         this.inflater = LayoutInflater.from(context);
-        this.database = database;
     }
 
     public int get_id(int pos){
@@ -113,7 +115,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
     public void onBindViewHolder(WeatherAdapter.ViewHolder holder, int position) {
         int id = get_id(position);
         String city = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_CITY));
-        String date = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DATE));
         String day_imp = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_DAY));
         String month = get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MONTH));
 
@@ -122,6 +123,9 @@ public class WeatherAdapter extends RecyclerView.Adapter<WeatherAdapter.ViewHold
         holder.temp_min_text.setText(get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MIN_TEMP)));
         holder.day_text.setText(day_imp);
         holder.month_text.setText(month);
+        Log.d("RRR", "adapter: " + city
+                + get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MAX_TEMP))
+                + get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_MIN_TEMP)));
         Picasso.get().load(get_elem(id).getString(get_elem(id).getColumnIndex(DBHelper.KEY_URL_IMG)))
                 .into(holder.image);
     }

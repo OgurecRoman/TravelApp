@@ -13,8 +13,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.myapplication.adapters.WeatherAdapter;
+
 public class MeteoService extends Service {
-    private static final String TAG = "MeteoService";
 
     Handler handler;
 
@@ -27,31 +28,25 @@ public class MeteoService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String city_name = intent.getStringExtra("city");
         String date = intent.getStringExtra("date");
+        Integer id = intent.getIntExtra("id", 0);
+
         handler = new Handler(Looper.getMainLooper()){
             @Override
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 String response = (String) msg.obj;
+                Integer id = (int) msg.arg1;
                 Intent intent = new Intent("MeteoService");
                 intent.putExtra("INFO", response);
+                intent.putExtra("ID", id);
                 sendBroadcast(intent);
             }
         };
 
-        Thread weatherThread = new Thread(new HttpsRequesr(handler, city_name, date));
+        Thread weatherThread = new Thread(new HttpsRequesr(handler, city_name, date, id));
         weatherThread.start();
 
         return START_NOT_STICKY;
-    }
-
-    public static void startServiceWithParams(Context context, String city, String date) {
-        // Создание Intent для запуска сервиса
-        Intent intent = new Intent(context, MeteoService.class);
-        intent.putExtra("city", city);
-        intent.putExtra("date", date);
-
-        // Запуск сервиса
-        context.startService(intent);
     }
 
     @Override

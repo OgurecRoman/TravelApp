@@ -46,7 +46,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="350dp"
-        android:layout_height="230dp"
+        android:layout_height="200dp"
         android:layout_gravity="center"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
 

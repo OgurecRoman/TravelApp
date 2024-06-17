@@ -36,6 +36,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class WeatherFragment extends Fragment {
+    private BroadcastReceiver receiver;
     private DBHelper dbHelper;
     private SQLiteDatabase database;
     RecyclerView recyclerView;
@@ -62,6 +63,12 @@ public class WeatherFragment extends Fragment {
         super.onPause();
         Intent intent = new Intent(getActivity(), MeteoService.class);
         getActivity().stopService(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(receiver);
     }
 
     public void show(){
@@ -93,6 +100,23 @@ public class WeatherFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_weather, container, false);
         String city, date;
 
+        recyclerView = view.findViewById(R.id.list_weather);
+        WeatherAdapter adapter = new WeatherAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals("MyServiceAction")) {
+                    String value = intent.getStringExtra("key");
+                    recyclerView.setAdapter(new WeatherAdapter(getActivity()));
+                }
+            }
+        };
+
+        IntentFilter filter = new IntentFilter("MyServiceAction");
+        getActivity().registerReceiver(receiver, filter);
+
         dbHelper = new DBHelper(getActivity());
         database = dbHelper.getWritableDatabase();
 
@@ -116,10 +140,6 @@ public class WeatherFragment extends Fragment {
         }
 
         cursor.close();
-
-        recyclerView = view.findViewById(R.id.list_weather);
-        WeatherAdapter adapter = new WeatherAdapter(getActivity());
-        recyclerView.setAdapter(adapter);
 
         Button btn_next = view.findViewById(R.id.next);
         btn_next.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_weatherFragment_to_LaguageFragment));

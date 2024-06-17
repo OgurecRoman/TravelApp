@@ -2,15 +2,19 @@ package com.example.myapplication;
 
 import android.app.Application;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.IBinder;
 import android.util.Log;
 
 import com.example.myapplication.adapters.WeatherAdapter;
 import com.example.myapplication.data_base.DBHelper;
+import com.example.myapplication.meteo.MeteoService;
 import com.yandex.mapkit.MapKitFactory;
 
 import org.json.JSONArray;
@@ -20,9 +24,24 @@ import org.json.JSONObject;
 import java.util.Objects;
 
 public class App extends Application {
+    private MeteoService meteoService;
     private DBHelper dbHelper;
+
     public static SQLiteDatabase database;
     private ContentValues contentValues_name;
+
+    private ServiceConnection connection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MeteoService.LocalBinder binder = (MeteoService.LocalBinder) service;
+            meteoService = binder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+        }
+    };
+
     BroadcastReceiver receivar = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -54,6 +73,7 @@ public class App extends Application {
                         "id = ?", new String[]{"" + id});
                 Log.d("RRR", "записали в бд " + id +
                         " " + temp_max + " " + temp_min);
+                meteoService.sendData();
             } catch (JSONException e) {
                 throw new RuntimeException(e);
             }
@@ -70,6 +90,9 @@ public class App extends Application {
         database = dbHelper.getWritableDatabase();
 
         registerReceiver(receivar, new IntentFilter("MeteoService"), RECEIVER_EXPORTED);
+
+        Intent intent = new Intent(this, MeteoService.class);
+        bindService(intent, connection, Context.BIND_AUTO_CREATE);
 
     }
 }

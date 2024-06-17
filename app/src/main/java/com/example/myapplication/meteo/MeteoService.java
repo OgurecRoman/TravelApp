@@ -3,6 +3,7 @@ package com.example.myapplication.meteo;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -16,8 +17,15 @@ import androidx.annotation.Nullable;
 import com.example.myapplication.adapters.WeatherAdapter;
 
 public class MeteoService extends Service {
+    private final IBinder binder = new LocalBinder();
 
     Handler handler;
+
+    public class LocalBinder extends Binder {
+        public MeteoService getService() {
+            return MeteoService.this;
+        }
+    }
 
     @Override
     public void onCreate() {
@@ -49,6 +57,12 @@ public class MeteoService extends Service {
         return START_NOT_STICKY;
     }
 
+    public void sendData() {
+        Intent intent = new Intent("MyServiceAction");
+        intent.putExtra("key", "value");
+        sendBroadcast(intent);
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -57,6 +71,6 @@ public class MeteoService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return binder;
     }
 }
